@@ -16,5 +16,9 @@ Multiple attention heads allows for attending to parts of the sequence different
 During self attention a word's attention score with itself will be the highest, therefore by using mutli-head attention a word can establish its relationship with other words in the sequence by calculating the attention scores with them in parallel.
 
 
+Results:
+Precision: 93%
+Recall: 93%
+
 The dataset is attached here itself.
 
