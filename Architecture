@@ -1,0 +1,45 @@
+Code:
+embed_dim = 50  
+heads = 2  
+neurons = 32
+maxlen = 20
+vocab_size = 20886
+
+inputs = layers.Input(shape=(maxlen,))
+embedding_layer = TokenAndPositionEmbedding(maxlen, vocab_size, embed_dim)
+x = embedding_layer(inputs)
+transformer_block = TransformerEncoder(embed_dim, heads, neurons)
+x = transformer_block(x)
+x = layers.GlobalAveragePooling1D()(x)
+x = Dropout(0.35)(x)
+outputs = layers.Dense(1, activation="sigmoid")(x)
+model = Model(inputs=inputs, outputs=outputs)
+
+
+
+The model architecture has a total of six layers:
+
+Input Layer:
+
+Shape: (maxlen,) (sequences of integers with a maximum length of 20).
+Embedding Layer:
+
+Custom embedding layer combining token and positional embeddings.
+Parameters: embed_dim (embedding dimension), maxlen (maximum length), vocab_size (vocabulary size).
+Output Shape: (maxlen, embed_dim).
+Transformer Block:
+
+Custom transformer block with parameters: embed_dim (embedding dimension), heads (number of attention heads), neurons (number of neurons).
+Output Shape: Same as the input shape (maxlen, embed_dim).
+Global Average Pooling Layer:
+
+Reduces spatial dimensions by computing the average value of each feature across the time dimension.
+Output Shape: (embed_dim,).
+Dropout Layer:
+
+Dropout rate: 0.35.
+Output Shape: (embed_dim,).
+Output Layer:
+
+Dense layer with one neuron and a sigmoid activation function for binary classification.
+Output Shape: (1,).
